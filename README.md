@@ -1,5 +1,7 @@
 # NahUtils
 
+implementation 'com.github.joelnah:NahUtils:Tag'
+
 
         //Nlog 생성
         //new Nlog(this);
