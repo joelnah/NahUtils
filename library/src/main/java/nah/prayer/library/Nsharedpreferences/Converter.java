@@ -1,4 +1,4 @@
-package nah.prayer.library.Npref;
+package nah.prayer.library.Nsharedpreferences;
 
 /**
  * Used to handle encoding and decoding as an intermediate layer.

@@ -2,8 +2,8 @@ package nah.prayer.nahutils;
 
 import android.app.Application;
 
-import nah.prayer.library.Nlog.Nlog;
-import nah.prayer.library.Npref.Npref;
+import nah.prayer.library.Nlog;
+import nah.prayer.library.Nsharedpreferences.Npref;
 
 public class BaseApp extends Application {
     @Override

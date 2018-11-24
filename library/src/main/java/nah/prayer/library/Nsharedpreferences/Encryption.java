@@ -1,4 +1,4 @@
-package nah.prayer.library.Npref;
+package nah.prayer.library.Nsharedpreferences;
 
 /**
  * Intermediate layer which is used by Npref to encrypt and decrypt the given values.

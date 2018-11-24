@@ -1,4 +1,4 @@
-package nah.prayer.library.Npref;
+package nah.prayer.library.Nsharedpreferences;
 
 /**
  * Intermediate layer which stores the given data. Used by Npref.

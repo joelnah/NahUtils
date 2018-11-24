@@ -1,4 +1,4 @@
-package nah.prayer.library.Npref;
+package nah.prayer.library.Nsharedpreferences;
 
 /**
  * Interceptor for all logs happens in the library

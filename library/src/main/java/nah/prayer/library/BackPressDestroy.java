@@ -1,4 +1,4 @@
-package nah.prayer.library.DoubleBack;
+package nah.prayer.library;
 
 import android.app.Activity;
 import android.widget.Toast;

@@ -3,9 +3,9 @@ package nah.prayer.nahutils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import nah.prayer.library.DoubleBack.BackPressDestroy;
-import nah.prayer.library.Nlog.Nlog;
-import nah.prayer.library.Npref.Npref;
+import nah.prayer.library.BackPressDestroy;
+import nah.prayer.library.Nlog;
+import nah.prayer.library.Nsharedpreferences.Npref;
 
 public class MainActivity extends AppCompatActivity {
 

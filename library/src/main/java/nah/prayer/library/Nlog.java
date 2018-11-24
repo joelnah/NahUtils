@@ -1,4 +1,4 @@
-package nah.prayer.library.Nlog;
+package nah.prayer.library;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
