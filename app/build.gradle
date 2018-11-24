@@ -4,8 +4,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "nah.prayer.nahutils"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 19
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
