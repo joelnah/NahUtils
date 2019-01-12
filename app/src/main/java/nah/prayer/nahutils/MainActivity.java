@@ -24,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         Npref.put(key,true);
         Nlog.d(String.format("에또... %s 입니당~~~", Npref.get(key,false)));
 
+        Nlog.d(1);
+        Nlog.d(1L);
+        Nlog.d(1f);
+        Nlog.d(1d);
+
     }
 
     @Override

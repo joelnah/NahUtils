@@ -19,10 +19,10 @@ public class Nlog {
     private static boolean DEBUG= false;
 
 
-    public Nlog(Context con){
+    Nlog(Context con){
         DEBUG = isDebuggable(con);
     }
-    public Nlog(Context con, String tag){
+    Nlog(Context con, String tag){
         DEBUG = isDebuggable(con);
         TAG = tag;
     }
@@ -31,44 +31,53 @@ public class Nlog {
     /**
      * Log Level Error
      **/
-    public static final void e(String message) {
+    public static void e(String message) {
         if (DEBUG) Log.e(TAG, buildLogMsg(message));
     }
 
     /**
      * Log Level Warning
      **/
-    public static final void w(String message) {
+    public static void w(String message) {
         if (DEBUG) Log.w(TAG, buildLogMsg(message));
     }
 
     /**
      * Log Level Information
      **/
-    public static final void i(String message) {
+    public static void i(String message) {
         if (DEBUG) Log.i(TAG, buildLogMsg(message));
     }
 
     /**
      * Log Level Debug
      **/
-    public static final void d(String message) {
+    public static void d(String message) {
         if (DEBUG) Log.d(TAG, buildLogMsg(message));
     }
-    /**
-     * Log Level Debug
-     **/
-    public static final void d(int message) {
-        if (DEBUG) Log.d(TAG, buildLogMsg(String.valueOf(message)));
+    public static void d(int message) {
+        if (DEBUG) Log.d(TAG, buildLogMsg("int : "+message));
+    }
+    public static void d(double message) {
+        if (DEBUG) Log.d(TAG, buildLogMsg("double : "+message));
+    }
+    public static void d(float message) {
+        if (DEBUG) Log.d(TAG, buildLogMsg("float : "+message));
+    }
+    public static void d(long message) {
+        if (DEBUG) Log.d(TAG, buildLogMsg("long : "+message));
+    }
+    public static void d(boolean message) {
+        if (DEBUG) Log.d(TAG, buildLogMsg("boolean : "+message));
     }
 
     /**
      * Log Level Verbose
      **/
-    public static final void v(String message) {
+    public static void v(String message) {
         if (DEBUG) Log.v(TAG, buildLogMsg(message));
     }
-    public static final void mem() {
+    public static void mem() {
         if (DEBUG){
             Log.e(TAG,buildLogMsg("Native heap size: "+(Debug.getNativeHeapSize() / (1024)) + "KB"));
             Log.e(TAG,buildLogMsg("Heap Free size : "+(Debug.getNativeHeapFreeSize() / (1024)) + "KB"));
