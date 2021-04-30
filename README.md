@@ -2,28 +2,22 @@
 
 implementation 'com.github.joelnah:NahUtils:Tag'
 
+Application
 
-        //Nlog 생성
-        //new Nlog(this);
-        //Nlog 생성, tag 변경
-        new Nlog(this, "nah");
+        NahUtil.set(this, "nah");
 
+Use
 
+	Nlog.d("String");
+	Nlog.d(1);
+	Nlog.d(1L);
+	Nlog.d(1f);
+	Nlog.d(1d);
 
-        Npref.init(this).build();
-        Npref.put(key,T);
-        
-        
-        
-        Npref.init(context)
-        .setEncryption(new NoEncryption())
-        .setLogInterceptor(new MyLogInterceptor())
-        .setConverter(new MyConverter())
-        .setParser(new MyParser())
-        .setStorage(new MyStorage())
-        .build();
-        
-        
-        
+	Npref.put(key,T);
+	Npref.get(key);
+
+back key
+
         BackPressDestroy backKey = new BackPressDestroy();
-        backKey.onBackPressed(this, "한번더 누르면 끝~~~");
+        backKey.onBackPressed(this, "한번더 누르면 끝~~");
