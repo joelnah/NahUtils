@@ -28,13 +28,42 @@ back key
 	else{Toast.makeText(this, "백백", Toast.LENGTH_SHORT).show();}
     	}
 
-single click
+single click (java)
 
-	//new SingleClickListener() or new SingleClickListener(waitingSec)
-	((TextView) findViewById(R.id.tv)).setOnClickListener(new SingleClickListener(){
+	waitingSec=1000 //default=800
+	
+	view.setOnClickListener(new SingleClickListener(){
         @Override
         public void onSingleClick(View v) {
               Nlog.d("클릭");
               Toast.makeText(MainActivity.this, "클릭", Toast.LENGTH_SHORT).show();
         }
         });
+	or
+	view.setOnClickListener(new SingleClickListener(waitingSec){
+        @Override
+        public void onSingleClick(View v) {
+              Nlog.d("클릭");
+              Toast.makeText(MainActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+        }
+        });
+	
+single click (kotlin)	
+
+	waitingSec=1000 //default=800
+	
+	view.setOnSingleClickListener {
+            Nlog.d("클릭")
+            Toast.makeText(this, "클릭", Toast.LENGTH_SHORT).show()
+        }
+	or
+	view.setOnSingleClickListener({
+            Nlog.d("클릭")
+            Toast.makeText(this, "클릭", Toast.LENGTH_SHORT).show()
+        },waitingSec) 
+
+NetworkUtil
+
+	if(NetworkUtil().getWhatKindOfNetwork(context)) {
+	...
+	}
