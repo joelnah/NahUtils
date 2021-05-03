@@ -1,4 +1,5 @@
 # NahUtils
+[![](https://jitpack.io/v/joelnah/NahUtils.svg)](https://jitpack.io/#joelnah/NahUtils)
 
 implementation 'com.github.joelnah:NahUtils:Tag'
 
@@ -19,5 +20,21 @@ Use
 
 back key
 
-        BackPressDestroy backKey = new BackPressDestroy();
-        backKey.onBackPressed(this, "한번더 누르면 끝~~");
+	//isWaiting() or isWaiting(waitingSec)
+        @Override
+    	public void onBackPressed() 
+	{
+        if(!isWaiting()){Toast.makeText(this, "종료", Toast.LENGTH_SHORT).show();}
+	else{Toast.makeText(this, "백백", Toast.LENGTH_SHORT).show();}
+    	}
+
+single click
+
+	//new SingleClickListener() or new SingleClickListener(waitingSec)
+	((TextView) findViewById(R.id.tv)).setOnClickListener(new SingleClickListener(){
+        @Override
+        public void onSingleClick(View v) {
+              Nlog.d("클릭");
+              Toast.makeText(MainActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+        }
+        });
