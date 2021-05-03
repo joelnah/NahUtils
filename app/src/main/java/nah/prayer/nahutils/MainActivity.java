@@ -1,5 +1,6 @@
 package nah.prayer.nahutils;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,22 +24,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         String key = "key";
-
-        Nlog.d(String.format("에또... %s 입니당~~~", Npref.get(key,false)));
         Npref.put(key,"엄...테스트?");
-        Nlog.d(String.format("에또... %s 입니당~~~", Npref.get(key,false)));
 
+        Nlog.d("1");
         Nlog.d(1);
         Nlog.d(1L);
         Nlog.d(1f);
         Nlog.d(1d);
 
         ((TextView) findViewById(R.id.tv)).setText(Npref.get(key,""));
-        ((TextView) findViewById(R.id.tv)).setOnClickListener(new SingleClickListener(){
+        (findViewById(R.id.tv)).setOnClickListener(new SingleClickListener(){
             @Override
             public void onSingleClick(View v) {
-                Nlog.d("클릭");
-                Toast.makeText(MainActivity.this, "클릭", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, KotlinActivity.class));
             }
         });
 
