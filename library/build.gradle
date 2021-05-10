@@ -10,7 +10,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.6.3"
+        versionName "1.6.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,24 +30,24 @@ android {
 
 }
 
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            setGroupId 'com.github.joelnah'
-            //You can either define these here or get them from project conf elsewhere
-            setArtifactId 'NahUtils'
-            version android.defaultConfig.versionName
-            artifact bundleReleaseAar //aar artifact you want to publish
+project.afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                setGroupId 'com.github.joelnah'
+                //You can either define these here or get them from project conf elsewhere
+                setArtifactId 'NahUtils'
+                version android.defaultConfig.versionName
+                artifact 'NahUtils-1.6.4.jar' //aar artifact you want to publish
+            }
         }
-    }
-    repositories {
-        maven {
-            url = 'http://repo.my.host/content/repositories/releases/'
+        repositories {
+            maven {
+                url = 'http://repo.my.host/content/repositories/releases/'
+            }
         }
     }
 }
-
 //project.afterEvaluate {
 //    publishing {
 //        publications {
