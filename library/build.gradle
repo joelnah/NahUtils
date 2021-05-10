@@ -34,9 +34,9 @@ project.afterEvaluate {
     publishing {
         publications {
             library(MavenPublication) {
-                setGroupId 'com.github'
+                setGroupId 'com.github.joelnah'
                 //You can either define these here or get them from project conf elsewhere
-                setArtifactId 'joelnah'
+                setArtifactId 'NahUtils'
                 version android.defaultConfig.versionName
                 artifact bundleReleaseAar //aar artifact you want to publish
 
