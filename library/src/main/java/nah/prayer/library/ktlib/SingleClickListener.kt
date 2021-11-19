@@ -20,6 +20,7 @@ class SingleClickListener(
     override fun onClick(v: View) {
         if(tmpView != v){
             tmpView=v
+            TimeCheckUtil.isWaiting(interval)
             clickListener.onClick(v)
         }else {
             if (TimeCheckUtil.isWaiting(interval)) {
