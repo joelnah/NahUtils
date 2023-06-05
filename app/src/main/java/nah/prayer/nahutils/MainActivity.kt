@@ -3,6 +3,7 @@ package nah.prayer.nahutils
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -17,11 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nah.prayer.library.Nlog
-import nah.prayer.library.datastore.DataStorePreferenceAPIImp
-import nah.prayer.library.datastore.DataStorePreferenceConstants.stringKey
+import nah.prayer.library.datastore.Npref
 import nah.prayer.nahutils.ui.theme.NahUtilsTheme
+import java.util.Random
+import java.util.UUID
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,31 +45,56 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    val viewModel by lazy { MainActViewModel() }
     val scope = rememberCoroutineScope()
-    Nlog.d("Greeting")
-//    val preferenceAPIImpl = DataStorePreferenceAPIImp()
-//    val stringKey = stringKey("string_key")
-//
-    var text by remember{ mutableStateOf(name) }
+//    val preferenceAPIImpl = Npref()
+
+
+    val text = viewModel.text.collectAsState()
+    val su = viewModel.su.collectAsState()
+//    var su by remember{ mutableStateOf(0) }
 //
 //    LaunchedEffect(key1 = Unit, block = {
-//        preferenceAPIImpl.getPreference(stringKey,name).collect {
+//        Npref().getPref(stringKey,name).collect {
 //            text = it
 //            Nlog.d("text : $text")
 //        }
+//        Npref().getPref(intKey,su).collect {
+//            Nlog.d("int : $it")
+//        }
 //    })
 
-    Button(onClick = {
-        Nlog.d("text : $text")
-        // USER_AGE 값 저장
-//        scope.launch {
-//            preferenceAPIImpl.putPreference(stringKey, "tsetsetsetsets")
-//        }
-    }) {
-        Text(
-            text = "Hello $text!",
-            modifier = modifier
-        )
-    }
+    Nlog.d(text.value)
+    Nlog.d(su.value)
+    Column {
+        Button(onClick = {
+            // USER_AGE 값 저장
+            scope.launch {
+                viewModel.pref.putPref(viewModel.intKey, Random().nextInt(100))
+            }
+            scope.launch {
+                viewModel.pref.putPref(viewModel.stringKey, UUID.randomUUID().toString())
+            }
 
+        }) {
+            Text(
+                text = "Hello ${su.value} - ${text.value}!",
+                modifier = modifier
+            )
+        }
+        Button(onClick = {
+            // USER_AGE 값 저장
+            scope.launch {
+//                viewModel.pref.clearAllPreference()
+                viewModel.pref.removePref(viewModel.stringKey)
+            }
+        }) {
+            Text(
+                text = "del",
+                modifier = modifier
+            )
+        }
+
+
+    }
 }
