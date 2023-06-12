@@ -5,11 +5,14 @@ implementation 'com.github.joelnah:NahUtils:Tag'
 
 Application
 
-    NahUtils.init(this, "tah")
+    NahUtils.init(this)
 
 Use
 
 	Log : Nlog.d("String")
+        Nlog.setTag("NewTag") // default tag is "nah"
+
+
     DataStore : 
         viewmodel
 

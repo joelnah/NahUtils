@@ -17,6 +17,22 @@ class TimberDebugTree(private val tag:String) : Timber.DebugTree() {
     }
 }
 object Nlog {
+    init {
+        init("nah")
+    }
+
+    private fun init(tag:String){
+        if (BuildConfig.DEBUG) {
+            Timber.plant(TimberDebugTree(tag))
+        } else {
+//            Timber.plant(TimberReleaseTree())}
+        }
+    }
+
+    fun setTag(tag:String){
+        init(tag)
+    }
+
     private fun trance(msg: Any?): String {
         val element = Throwable().stackTrace[2]
         return "${element.fileName}[${element.lineNumber}]\n\t" + msg

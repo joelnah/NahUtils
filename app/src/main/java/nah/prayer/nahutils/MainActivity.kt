@@ -64,7 +64,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 //        }
 //    })
 
+
     Nlog.d(text.value)
+    Nlog.setTag("NahUtils")
     Nlog.d(su.value)
     Column {
         Button(onClick = {
