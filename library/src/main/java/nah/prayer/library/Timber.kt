@@ -1,6 +1,7 @@
 package nah.prayer.library
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import timber.log.Timber
 
@@ -17,20 +18,15 @@ class TimberDebugTree(private val tag:String) : Timber.DebugTree() {
     }
 }
 object Nlog {
-    init {
-        init("nah")
+    private var isDebug = false
+
+    fun init(context:Context, tag: String){
+        isDebug = (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        setTag(tag)
     }
 
-    private fun init(tag:String){
-        if (BuildConfig.DEBUG) {
-            Timber.plant(TimberDebugTree(tag))
-        } else {
-//            Timber.plant(TimberReleaseTree())}
-        }
-    }
-
-    fun setTag(tag:String){
-        init(tag)
+    fun setTag(tag:String, su:Boolean = false){
+        if(isDebug || su) Timber.plant(TimberDebugTree(tag))
     }
 
     private fun trance(msg: Any?): String {
@@ -50,13 +46,8 @@ object Nlog {
         Timber.w(trance(msg))
     }
 
-    @SuppressLint("LogNotTimber")
     fun e(msg: String) {
-        if (BuildConfig.DEBUG) {
-            Timber.e(trance(msg))
-        } else {
-            Log.e("nah", msg)
-        }
+        Timber.e(trance(msg))
     }
 
     fun e(e: Throwable) {
