@@ -47,4 +47,6 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
 
     implementation "com.jakewharton.timber:timber:4.7.1"
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
 }

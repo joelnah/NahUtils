@@ -47,22 +47,11 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     val viewModel by lazy { MainActViewModel() }
     val scope = rememberCoroutineScope()
-//    val preferenceAPIImpl = Npref()
 
 
     val text = viewModel.text.collectAsState()
     val su = viewModel.su.collectAsState()
-//    var su by remember{ mutableStateOf(0) }
-//
-//    LaunchedEffect(key1 = Unit, block = {
-//        Npref().getPref(stringKey,name).collect {
-//            text = it
-//            Nlog.d("text : $text")
-//        }
-//        Npref().getPref(intKey,su).collect {
-//            Nlog.d("int : $it")
-//        }
-//    })
+    val data = viewModel.data.collectAsState()
 
 
     Nlog.d(text.value)
@@ -71,13 +60,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Column {
         Button(onClick = {
             // USER_AGE 값 저장
-            scope.launch {
-                viewModel.pref.putPref(viewModel.intKey, Random().nextInt(100))
-            }
-            scope.launch {
-                viewModel.pref.putPref(viewModel.stringKey, UUID.randomUUID().toString())
-            }
-
+            Npref.putPref(scope, viewModel.intKey, Random().nextInt(100))
         }) {
             Text(
                 text = "Hello ${su.value} - ${text.value}!",
@@ -85,11 +68,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             )
         }
         Button(onClick = {
-            // USER_AGE 값 저장
-            scope.launch {
-//                viewModel.pref.clearAllPreference()
-                viewModel.pref.removePref(viewModel.stringKey)
-            }
+            // 모델 값 저장
+            Npref.putPref(scope, viewModel.anyKey, DataModel(id = "0", name = "이름-${text.value}", age = su.value + 1))
+        }) {
+            Text(
+                text = data.value.toString(),
+                modifier = modifier
+            )
+        }
+        Button(onClick = {
+            // USER_AGE 값 삭제
+            Npref.removePref(scope, viewModel.stringKey)
         }) {
             Text(
                 text = "del",
