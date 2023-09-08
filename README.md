@@ -14,35 +14,23 @@ Use
 
 
     DataStore : 
-        viewmodel
 
-        private val _text = MutableStateFlow("")
-        val text = _text.asStateFlow()
-
-        init {
-            viewModelScope.launch {
-                pref.getPref(stringKey, "nil").collect {
-                    _text.value = it
-                }
-            }
-        }
+    viewmodel
+    val text: StateFlow<String> = Npref.getPref(viewModelScope, stringKey, "nil")
+    val su: StateFlow<Int> = Npref.getPref(viewModelScope, intKey, 0)
+    val data: StateFlow<DataModel?> = Npref.getPref(viewModelScope, anyKey, DataModel::class.java)
         
-        compose
+    compose
+    ### read
+    val scope = rememberCoroutineScope()
+    val su = viewModel.su.collectAsState()
 
-        read
-        val readText = viewModel.text.collectAsState()
+    ### write
+    Npref.putPref(scope, viewModel.intKey, Random().nextInt(100))
 
-        write
-        scope.launch {
-                viewModel.pref.putPref("stringKey", "text")
-            }
-        
-        remove
-        scope.launch {
-                viewModel.pref.removePref("stringKey")
-            }
+    ### remove
+    Npref.removePref(scope, viewModel.intKey)
 
-        removeAll
-        scope.launch {
-                viewModel.pref.clearAllPreference()
-            }
+    ### removeAll
+    Npref.clearAllPreference(scope)
+
