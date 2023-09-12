@@ -81,15 +81,14 @@ object Npref {
     fun putPref(scope: CoroutineScope, key: String, value: Any) {
         scope.launch {
             dataSource.edit { preferences ->
-                when {
-                    value is String -> preferences[stringPreferencesKey(key)] = value
-                    value is Int -> preferences[intPreferencesKey(key)] = value
-                    value is Long -> preferences[longPreferencesKey(key)] = value
-                    value is Float -> preferences[floatPreferencesKey(key)] = value
-                    value is Double -> preferences[doublePreferencesKey(key)] = value
-                    value is Boolean -> preferences[booleanPreferencesKey(key)] = value
-                    value::class.isData -> preferences[stringPreferencesKey(key)] = gson.toJson(value)
-                    else -> throw IllegalArgumentException("Wrong Type")
+                when (value) {
+                    is String -> preferences[stringPreferencesKey(key)] = value
+                    is Int -> preferences[intPreferencesKey(key)] = value
+                    is Long -> preferences[longPreferencesKey(key)] = value
+                    is Float -> preferences[floatPreferencesKey(key)] = value
+                    is Double -> preferences[doublePreferencesKey(key)] = value
+                    is Boolean -> preferences[booleanPreferencesKey(key)] = value
+                    else -> preferences[stringPreferencesKey(key)] = gson.toJson(value)
                 }
             }
         }
