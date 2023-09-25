@@ -8,13 +8,14 @@ Application
     NahUtils.init(this)
 
 Use
-###Log###
+
+***Log***
 
 	Log : Nlog.d("String")
         Nlog.setTag("NewTag") // default tag is "nah"
 
 
-###DataStore###
+***DataStore***
 
     viewmodel
     val text: StateFlow<String> = Npref.getPref(viewModelScope, stringKey, "nil")
@@ -35,6 +36,6 @@ Use
     ### removeAll
     Npref.clearAllPreference(scope)
 
-###Net###
+***Net***
 
     NetworkUtil.getWhatKindOfNetwork(context)
