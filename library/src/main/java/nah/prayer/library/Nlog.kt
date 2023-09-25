@@ -1,8 +1,6 @@
 package nah.prayer.library
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import timber.log.Timber
 
 //class TimberReleaseTree : Timber.Tree() {

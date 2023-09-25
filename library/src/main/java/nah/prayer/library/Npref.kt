@@ -1,4 +1,4 @@
-package nah.prayer.library.datastore
+package nah.prayer.library
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -21,14 +21,8 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import nah.prayer.library.datastore.DataStoreManager.dataSource
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
+import nah.prayer.library.DataStoreManager.dataSource
 import java.io.IOException
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
-import kotlin.reflect.KClass
 
 object DataStoreManager {
     internal val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_preferences")

@@ -2,11 +2,8 @@ package nah.prayer.nahutils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import nah.prayer.library.datastore.Npref
+import nah.prayer.library.Npref
 
 class MainActViewModel :ViewModel(){
     val stringKey = "string_key"
