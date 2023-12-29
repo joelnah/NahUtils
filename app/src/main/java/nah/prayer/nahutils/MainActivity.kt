@@ -13,6 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
+import nah.prayer.library.NetworkUtil
 import nah.prayer.library.Nlog
 import nah.prayer.library.Npref
 import nah.prayer.nahutils.ui.theme.NahUtilsTheme
@@ -40,15 +43,20 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     val viewModel by lazy { MainActViewModel() }
     val scope = rememberCoroutineScope()
 
+    val context = LocalContext.current
 
     val text = viewModel.text.collectAsState()
     val su = viewModel.su.collectAsState()
     val data = viewModel.data.collectAsState()
-
+    val list = listOf(1,2,3,4,5,6,7,8,9,10)
 
     Nlog.d(text.value)
     Nlog.setTag("NahUtils")
     Nlog.d(su.value)
+    Nlog.d("두번째 : "+su.value)
+    Nlog.i("세번째 : "+list)
+    Nlog.e("nnn","4 : "+su.value)
+    Nlog.e("5 : "+su.value)
     Column {
         Button(onClick = {
             // USER_AGE 값 저장
@@ -74,6 +82,17 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         }) {
             Text(
                 text = "del",
+                modifier = modifier
+            )
+        }
+        Button(onClick = {
+            // network check
+            scope.launch {
+                NetworkUtil.getWhatKindOfNetwork(context)
+            }
+        }) {
+            Text(
+                text = "network check",
                 modifier = modifier
             )
         }

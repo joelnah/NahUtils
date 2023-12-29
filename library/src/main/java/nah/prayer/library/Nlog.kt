@@ -36,16 +36,32 @@ object Nlog {
         Timber.d(trance(msg))
     }
 
-    fun i(msg: String) {
+    fun d(tag:String, msg: Any?) {
+        Timber.tag(tag).d(trance(msg))
+    }
+
+    fun i(msg: Any?) {
         Timber.i(trance(msg))
     }
 
-    fun w(msg: String) {
+    fun i(tag:String, msg: Any?) {
+        Timber.tag(tag).i(trance(msg))
+    }
+
+    fun w(msg: Any?) {
         Timber.w(trance(msg))
     }
 
-    fun e(msg: String) {
+    fun w(tag:String, msg: Any?) {
+        Timber.tag(tag).w(trance(msg))
+    }
+
+    fun e(msg: Any?) {
         Timber.e(trance(msg))
+    }
+
+    fun e(tag:String, msg: Any?) {
+        Timber.tag(tag).e(trance(msg))
     }
 
     fun e(e: Throwable) {
