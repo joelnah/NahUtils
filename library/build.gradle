@@ -1,8 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
-group='com.github.joelnah'
+
 android {
     namespace 'nah.prayer.library'
     compileSdk 35
@@ -47,4 +48,23 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:2.0.10"
     implementation "androidx.security:security-crypto:1.1.0-alpha06"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.joelnah'
+                artifactId = 'NahUtils'
+                version = '2.0.2-alpha02'
+            }
+            debug(MavenPublication) {
+                from components.debug
+                groupId = 'com.github.joelnah'
+                artifactId = 'NahUtils'
+                version = '2.0.2-alpha'
+            }
+        }
+    }
 }
