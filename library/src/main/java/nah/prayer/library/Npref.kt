@@ -1,6 +1,7 @@
 package nah.prayer.library
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -21,87 +22,44 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import nah.prayer.library.DataStoreManager.dataSource
 import java.io.IOException
-
-object DataStoreManager {
-    internal val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_preferences")
-    internal lateinit var dataSource: DataStore<Preferences>
-}
 
 
 object Npref {
-    val gson = Gson()
+    lateinit var sharedPreferences: SharedPreferences
+
+    fun <T>putData(key: String, value: T) {
+        sharedPreferences.edit().apply {
+            when(value) {
+                is String -> putString(key, value)
+                is Int -> putInt(key, value)
+                is Boolean -> putBoolean(key, value)
+                is Float -> putFloat(key, value)
+                is Long -> putLong(key, value)
+                else -> throw IllegalArgumentException("This type can't be saved into Preferences")
+            }
+        }.apply()
+    }
 
     @Suppress("UNCHECKED_CAST")
-    fun<T> getPref(scope: CoroutineScope, key: String, defaultValue: T): StateFlow<T> {
-        val flow = dataSource.data.catch { exception ->
-            if (exception is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }.map { preferences ->
-            when (defaultValue) {
-                is String -> preferences[stringPreferencesKey(key)] as? T ?: defaultValue
-                is Int -> preferences[intPreferencesKey(key)] as? T ?: defaultValue
-                is Long -> preferences[longPreferencesKey(key)] as? T ?: defaultValue
-                is Float -> preferences[floatPreferencesKey(key)] as? T ?: defaultValue
-                is Double -> preferences[doublePreferencesKey(key)] as? T ?: defaultValue
-                is Boolean -> preferences[booleanPreferencesKey(key)] as? T ?: defaultValue
-                else -> throw IllegalArgumentException("Wrong Type")
-            }
-        }.stateIn(scope = scope, started = SharingStarted.Lazily, initialValue = defaultValue)
-
-        return flow
+    fun <T>getData(key: String, defaultValue: T): T {
+        return when(defaultValue) {
+            is String -> sharedPreferences.getString(key, defaultValue)
+            is Int -> sharedPreferences.getInt(key, defaultValue)
+            is Boolean -> sharedPreferences.getBoolean(key, defaultValue)
+            is Float -> sharedPreferences.getFloat(key, defaultValue)
+            is Long -> sharedPreferences.getLong(key, defaultValue)
+            else -> throw IllegalArgumentException("This type can't be saved into Preferences")
+        } as T
     }
 
-    fun<T> getPref(scope: CoroutineScope, key: String, defaultValue: Class<T>): StateFlow<T?> {
-        val flow = dataSource.data.catch { exception ->
-            if (exception is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }.map { preferences ->
-            gson.fromJson(preferences[stringPreferencesKey(key)], defaultValue) ?: null
-        }.stateIn(scope = scope, started = SharingStarted.Lazily, initialValue = null)
-
-        return flow
+    fun removeData(key: String) {
+        sharedPreferences.edit().remove(key).apply()
     }
 
-
-
-    fun putPref(scope: CoroutineScope, key: String, value: Any) {
-        scope.launch {
-            dataSource.edit { preferences ->
-                when (value) {
-                    is String -> preferences[stringPreferencesKey(key)] = value
-                    is Int -> preferences[intPreferencesKey(key)] = value
-                    is Long -> preferences[longPreferencesKey(key)] = value
-                    is Float -> preferences[floatPreferencesKey(key)] = value
-                    is Double -> preferences[doublePreferencesKey(key)] = value
-                    is Boolean -> preferences[booleanPreferencesKey(key)] = value
-                    else -> preferences[stringPreferencesKey(key)] = gson.toJson(value)
-                }
-            }
-        }
-    }
-    fun removePref(scope: CoroutineScope, key: String) {
-        scope.launch {
-            dataSource.data.map { preferences ->
-                dataSource.edit {
-                    it.remove(preferences.asMap().keys.first { i -> i.name == key })
-                }
-            }.firstOrNull()
-        }
+    fun clearData() {
+        sharedPreferences.edit().clear().apply()
     }
 
-    fun clearAllPreference(scope: CoroutineScope) {
-        scope.launch {
-            dataSource.edit { preferences ->
-                preferences.clear()
-            }
-        }
-    }
 }
+

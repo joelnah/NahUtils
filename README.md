@@ -1,5 +1,4 @@
 # NahUtils
-[![](https://jitpack.io/v/joelnah/NahUtils.svg)](https://jitpack.io/#joelnah/NahUtils)
 
 implementation 'com.github.joelnah:NahUtils:Tag'
 
@@ -14,27 +13,23 @@ Use
 	Log : Nlog.d("String")
         Nlog.setTag("NewTag") // default tag is "nah"
 
-
 ***DataStore***
-
-    viewmodel
-    val text: StateFlow<String> = Npref.getPref(viewModelScope, stringKey, "nil")
-    val su: StateFlow<Int> = Npref.getPref(viewModelScope, intKey, 0)
-    val data: StateFlow<DataModel?> = Npref.getPref(viewModelScope, anyKey, DataModel::class.java)
         
-    compose
     ### read
-    val scope = rememberCoroutineScope()
-    val su = viewModel.su.collectAsState()
+    val text = rememberDataStore(stringKey, "nil")
+    val su = rememberDataStore(intKey, 0)
+    val data = rememberDataStore(anyKey, DataModel())
 
-    ### write
-    Npref.putPref(scope, viewModel.intKey, Random().nextInt(100))
+    Nstore.putDS(scope, "keyValue", "default")
+    Nstore.removeDS(scope, viewModel.intKey)
+    Nstore.clearData(scope)
 
-    ### remove
-    Npref.removePref(scope, viewModel.intKey)
+***SharedPreferences***
 
-    ### removeAll
-    Npref.clearAllPreference(scope)
+    Npref.getData(intKey, -1)
+    Npref.putData(intKey, Random().nextInt(100))
+    Npref.removeData(intKey)
+    Npref.clearData()
 
 ***Net***
 
