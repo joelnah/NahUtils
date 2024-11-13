@@ -58,7 +58,7 @@ publishing { // 추가
                 from(components["release"])
                 groupId = "com.github.joelnah"
                 artifactId = "NahUtils"
-                version = "2.0.2-alpha01"
+                version = "2.1.0-alpha01"
             }
         }
     }
