@@ -12,7 +12,7 @@ Use
 ***Log***
 
 	Log : Nlog.d("String")
-        Nlog.setTag("NewTag") // default tag is "nah"
+        Nlog.setTag("NewTag") // default tag is "nah"[.gitignore](../ControlCenter/NaUtils/.gitignore)
 
 ***DataStore***
         
