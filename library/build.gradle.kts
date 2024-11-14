@@ -7,15 +7,15 @@ plugins {
 
 android {
     namespace = "nah.prayer.library"
-    compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdk = 35
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVer.get())
-        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVer.get())
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {

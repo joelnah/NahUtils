@@ -3,7 +3,7 @@ compileSdk = "35"
 targetSdk = "34"
 minSdk = "26"
 verCode = "1"
-verName = "2.1.0-alpha02"
+verName = "2.1.0-alpha03"
 javaVer = "17"
 
 agp = "8.7.1"
