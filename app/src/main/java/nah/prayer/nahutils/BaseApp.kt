@@ -6,6 +6,6 @@ import nah.prayer.library.NahUtils
 class BaseApp : Application(){
     override fun onCreate() {
         super.onCreate()
-        NahUtils.init(this)
+        NahUtils.init(this, "nah")
     }
 }

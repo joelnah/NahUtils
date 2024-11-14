@@ -72,7 +72,7 @@ fun Greeting(modifier: Modifier = Modifier) {
     val su = rememberDataStore(intKey, 0)
     val data = rememberDataStore(anyKey, DataModel())
 
-    Nlog.d("NahUtilㄴ - ${text} - ${su} - ${data}")
+    Nlog.d("NahUtil - $su")
 
 
     Column(
