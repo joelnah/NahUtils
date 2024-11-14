@@ -1,54 +1,51 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     id("maven-publish")
 }
 
 android {
     namespace = "nah.prayer.library"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 26
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.javaVer.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.javaVer.get())
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = libs.versions.javaVer.get()
     }
     buildFeatures {
         buildConfig = true
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.2"
-    }
 }
 
 dependencies {
 
-    implementation ("androidx.core:core-ktx:1.15.0")
-    implementation ("androidx.appcompat:appcompat:1.7.0")
-    implementation ("com.google.android.material:material:1.12.0")
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.6.1")
+    implementation (libs.androidx.core.ktx)
+    implementation (libs.androidx.appcompat)
+    implementation (libs.material)
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.androidx.junit)
+    androidTestImplementation (libs.androidx.espresso.core)
 
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.datastore:datastore-preferences-core:1.1.1")
+    implementation(libs.bundles.androidx.datasore)
+    implementation (libs.androidx.security.crypto)
 
-    implementation ("androidx.compose.runtime:runtime:1.7.5")
-    implementation ("androidx.compose.ui:ui:1.7.5")
+    implementation (libs.androidx.runtime)
+    implementation (libs.androidx.ui)
 
-    implementation ("com.jakewharton.timber:timber:5.0.1")
-    implementation ("com.google.code.gson:gson:2.10.1")
-    implementation ("org.jetbrains.kotlin:kotlin-reflect:2.0.10")
-    implementation ("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation (libs.timber)
+    implementation (libs.gson)
+    implementation (libs.kotlin.reflect)
+
 }
 
 publishing { // 추가
@@ -58,7 +55,7 @@ publishing { // 추가
                 from(components["release"])
                 groupId = "com.github.joelnah"
                 artifactId = "NahUtils"
-                version = "2.1.0-alpha01"
+                version = libs.versions.verName.get()
             }
         }
     }
