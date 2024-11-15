@@ -7,8 +7,8 @@
 ### Setting
 
 ```kotlin
-//add this line to your settings.gradle
-maven(url = "https://jitpack.io") // add this line
+//settings.gradle
+maven(url = "https://jitpack.io")
 //build.gradle
 implementation ("com.github.joelnah:NahUtils:Tag")
 ```
@@ -23,28 +23,28 @@ NahUtils.init(this, "NewTag")
 
 ***Log***
 ```kotlin
-	Nlog.d("String")
-    Nlog.setTag("ChangeTag") // change tag
+Nlog.d("String")
+Nlog.setTag("ChangeTag") // change tag
 ```
 
 ***DataStore***
  ```kotlin   
-    val text = rememberDataStore(stringKey, "nil")
-    val su = rememberDataStore(intKey, 0)
-    val data = rememberDataStore(anyKey, DataModel())
+ val text = rememberDataStore(stringKey, "nil")
+ val su = rememberDataStore(intKey, 0)
+ val data = rememberDataStore(anyKey, DataModel())
 
-    Nstore.putDS(scope, "keyValue", "default")
-    Nstore.removeDS(scope, viewModel.intKey)
-    Nstore.clearData(scope)
+ Nstore.putDS(scope, "keyValue", "default")
+ Nstore.removeDS(scope, viewModel.intKey)
+ Nstore.clearData(scope)
 ```
 ***SharedPreferences***
 ```kotlin
-    Npref.getData(intKey, -1)
-    Npref.putData(intKey, Random().nextInt(100))
-    Npref.removeData(intKey)
-    Npref.clearData()
+Npref.getData(intKey, -1)
+Npref.putData(intKey, Random().nextInt(100))
+Npref.removeData(intKey)
+Npref.clearData()
 ```
 ***Net***
 ```kotlin
-    NetworkUtil.getWhatKindOfNetwork(context)
+NetworkUtil.getWhatKindOfNetwork(context)
 ```
