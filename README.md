@@ -5,14 +5,15 @@ implementation 'com.github.joelnah:NahUtils:Tag'
 
 Application
 
-    NahUtils.init(this)
+    NahUtils.init(this) // default tag is "Nlog"
+    NahUtils.init(this, "NewTag")
 
 Use
 
 ***Log***
 
-	Log : Nlog.d("String")
-        Nlog.setTag("NewTag") // default tag is "nah"[.gitignore](../ControlCenter/NaUtils/.gitignore)
+	Nlog.d("String")
+    Nlog.setTag("ChangeTag") // change tag
 
 ***DataStore***
         
