@@ -1,23 +1,34 @@
 # NahUtils
 [![](https://jitpack.io/v/joelnah/NahUtils.svg)](https://jitpack.io/#joelnah/NahUtils)
 
-implementation 'com.github.joelnah:NahUtils:Tag'
 
-Application
+## 개요
 
-    NahUtils.init(this) // default tag is "Nlog"
-    NahUtils.init(this, "NewTag")
+### Setting
 
-Use
+```kotlin
+//add this line to your settings.gradle
+maven(url = "https://jitpack.io") // add this line
+//build.gradle
+implementation ("com.github.joelnah:NahUtils:Tag")
+```
+
+## 사용법
+
+### Application
+```kotlin
+NahUtils.init(this) // default tag is "Nlog"
+NahUtils.init(this, "NewTag")
+```
 
 ***Log***
-
+```kotlin
 	Nlog.d("String")
     Nlog.setTag("ChangeTag") // change tag
+```
 
 ***DataStore***
-        
-    ### read
+ ```kotlin   
     val text = rememberDataStore(stringKey, "nil")
     val su = rememberDataStore(intKey, 0)
     val data = rememberDataStore(anyKey, DataModel())
@@ -25,14 +36,15 @@ Use
     Nstore.putDS(scope, "keyValue", "default")
     Nstore.removeDS(scope, viewModel.intKey)
     Nstore.clearData(scope)
-
+```
 ***SharedPreferences***
-
+```kotlin
     Npref.getData(intKey, -1)
     Npref.putData(intKey, Random().nextInt(100))
     Npref.removeData(intKey)
     Npref.clearData()
-
+```
 ***Net***
-
+```kotlin
     NetworkUtil.getWhatKindOfNetwork(context)
+```
