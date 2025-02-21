@@ -34,9 +34,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import nah.prayer.library.NetworkUtil
-import nah.prayer.library.Nlog
 import nah.prayer.library.Npref
 import nah.prayer.library.Nstore
+import nah.prayer.library.log.Nlog
 import nah.prayer.library.rememberDataStore
 import nah.prayer.nahutils.ui.theme.NahUtilsTheme
 import java.util.Random

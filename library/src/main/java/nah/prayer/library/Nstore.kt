@@ -14,7 +14,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.gson.Gson
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import nah.prayer.library.log.Nlog
 import java.io.IOException
 
 @Composable

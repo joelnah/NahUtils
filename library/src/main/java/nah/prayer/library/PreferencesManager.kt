@@ -7,8 +7,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 
-const val PREF_NAME = "app_preferences"
-const val DATASTORE_NAME = "app_datastore"
+const val PREF_NAME = "nah_app_preferences"
+const val DATASTORE_NAME = "nah_app_datastore"
 
 internal class PreferencesManager(val context: Context) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
