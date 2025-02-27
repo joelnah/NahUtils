@@ -14,7 +14,7 @@ class LogManager {
     }
 
     private fun getTraceElements(stackTrace: Array<StackTraceElement>): Int {
-        val methodNames = listOf("d", "i", "w", "e")
+        val methodNames = Level.entries.map { it.name.first().lowercase() }
         var logIndex = -1
         //Nlog 클래스의 methodNames 메소드를 찾아서 해당 위치부터 Activity.kt 파일이 있는 곳까지만 출력
         for (i in stackTrace.indices) {

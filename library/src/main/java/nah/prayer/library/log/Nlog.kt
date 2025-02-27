@@ -19,16 +19,19 @@ object Nlog {
     }
 
     private fun log(level: Level, tag: String = logManager.tag, msg: Any?, isPath:Boolean) {
-        if (!isDebug) return
-
-        val message = logManager.trance(msg, isPath)
-        when (level) {
-            Level.DEBUG -> Timber.tag(tag).d(message)
-            Level.INFO -> Timber.tag(tag).i(message)
-            Level.WARN -> Timber.tag(tag).w(message)
-            Level.ERROR -> Timber.tag(tag).e(message)
+        if (level == Level.ALL || isDebug) {
+            val message = logManager.trance(msg, isPath)
+            when (level) {
+                Level.ALL -> Timber.tag(tag).e(message)
+                Level.DEBUG -> Timber.tag(tag).d(message)
+                Level.INFO -> Timber.tag(tag).i(message)
+                Level.WARN -> Timber.tag(tag).w(message)
+                Level.ERROR -> Timber.tag(tag).e(message)
+            }
         }
     }
+
+    fun a(msg: Any?, isPath:Boolean = false) = log(Level.ALL, msg = msg, isPath = isPath)
 
     fun d(msg: Any?, isPath:Boolean = false) = log(Level.DEBUG, msg = msg, isPath = isPath)
     fun d(tag: String, msg: Any?, isPath:Boolean = false) = log(Level.DEBUG, tag, msg, isPath)
@@ -43,5 +46,4 @@ object Nlog {
     fun e(tag: String, msg: Any?, isPath:Boolean = false) = log(Level.ERROR, tag, msg, isPath)
     fun e(throwable: Throwable) = Timber.e(throwable)
 
-    private enum class Level { DEBUG, INFO, WARN, ERROR }
 }
