@@ -27,6 +27,8 @@ Nlog.d("String")
 Nlog.setTag("ChangeTag") // 전체 tag 변경
 Nlog.d("newTag","String") // 해당 로그 tag 변경
 Nlog.d("String", true) // method path 출력
+
+Nlog.a("String") // build type 상관 없이 로그 출력
 ```
 
 ***DataStore***
