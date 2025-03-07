@@ -4,7 +4,7 @@ targetSdk = "34"
 minSdk = "26"
 verCode = "1"
 verName = "2.1.1"
-javaVer = "17"
+javaVer = "11"
 
 agp = "8.7.1"
 androidMavenGradlePlugin = "2.1"
