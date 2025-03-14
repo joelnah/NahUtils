@@ -17,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 import nah.prayer.library.NetworkUtil
 import nah.prayer.library.Npref
 import nah.prayer.library.Nstore
+import nah.prayer.library.composutils.rememberKeyboardVisibility
 import nah.prayer.library.log.Nlog
 import nah.prayer.library.rememberDataStore
 import nah.prayer.nahutils.ui.theme.NahUtilsTheme
@@ -71,19 +73,26 @@ fun Greeting(modifier: Modifier = Modifier) {
     val text = rememberDataStore(stringKey, "nil")
     val su = rememberDataStore(intKey, 0)
     val data = rememberDataStore(anyKey, DataModel())
-
     Nlog.d("NahUtil - $su")
-
 
     Column(
         verticalArrangement = Arrangement.Center,
     ) {
 
+        TextField(
+            value = text,
+            onValueChange = {
+                // It saved the String
+                Nstore.putDS(scope, stringKey, it)
+            },
+            label = { Text("이름") },
+            modifier = modifier
+        )
         /**
          * DataStore
          * */
         Button(onClick = {
-            // Nstore 값 저장
+            // It saved the Types
             Nstore.putDS(scope, intKey, Random().nextInt(100))
         }) {
             Text(
@@ -92,7 +101,7 @@ fun Greeting(modifier: Modifier = Modifier) {
             )
         }
         Button(onClick = {
-            // 모델 값 저장
+            // It saved the DataModel
             Nstore.putDS(scope, anyKey, DataModel(id = "0", name = "이름-${text}", age = su + 1))
         }) {
             Text(
@@ -101,7 +110,7 @@ fun Greeting(modifier: Modifier = Modifier) {
             )
         }
         Button(onClick = {
-            // Nstore 값 삭제
+            // remove
             Nstore.removeDS(scope, stringKey)
             Nstore.removeDS(scope, intKey)
             Nstore.removeDS(scope, anyKey)
@@ -114,9 +123,9 @@ fun Greeting(modifier: Modifier = Modifier) {
 
         /**
          * SharedPreferences
+         * the usage is the same as DataStore
          * */
         Button(onClick = {
-            // SharedPreferences에 값 저장
             Npref.putData(intKey, Random().nextInt(100))
         }) {
             Text(
@@ -125,7 +134,6 @@ fun Greeting(modifier: Modifier = Modifier) {
             )
         }
         Button(onClick = {
-            // SharedPreferences의 값 가져오기
             prefRandomInt = Npref.getData(intKey, -1)
         }) {
             Text(
@@ -135,7 +143,6 @@ fun Greeting(modifier: Modifier = Modifier) {
         }
 
         Button(onClick = {
-            // SharedPreferences의 값 삭제
             Npref.removeData(intKey)
         }) {
             Text(

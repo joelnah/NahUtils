@@ -45,6 +45,7 @@ dependencies {
     implementation (libs.timber)
     implementation (libs.gson)
     implementation (libs.kotlin.reflect)
+    implementation (libs.compose.foundation)
 
 }
 
