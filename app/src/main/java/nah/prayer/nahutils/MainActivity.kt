@@ -19,6 +19,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,6 +34,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import nah.prayer.library.NetworkUtil
 import nah.prayer.library.Npref
@@ -40,7 +44,13 @@ import nah.prayer.library.Nstore
 import nah.prayer.library.composutils.rememberKeyboardVisibility
 import nah.prayer.library.log.Nlog
 import nah.prayer.library.rememberDataStore
+import nah.prayer.nahutils.ui.ExtensionScreen
+import nah.prayer.nahutils.ui.StartScreen
+import nah.prayer.nahutils.ui.StorageScreen
+import nah.prayer.nahutils.ui.TestScreen
 import nah.prayer.nahutils.ui.theme.NahUtilsTheme
+import nah.prayer.nahutils.utils.LocalNavController
+import nah.prayer.nahutils.utils.Screens
 import java.util.Random
 
 class MainActivity : ComponentActivity() {
@@ -48,161 +58,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NahUtilsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                val navController = rememberNavController()
+                CompositionLocalProvider(
+                    LocalNavController provides navController,
                 ) {
-                    Greeting()
+                    NavHost(navController = LocalNavController.current, startDestination = Screens.START) {
+                        composable(Screens.START) { StartScreen() }
+                        composable(Screens.STORAGE) { StorageScreen() }
+                        composable(Screens.EXTENSION) { ExtensionScreen() }
+                        composable(Screens.TEST) { TestScreen() }
+                    }
                 }
+
             }
         }
     }
 }
 
-@Composable
-fun Greeting(modifier: Modifier = Modifier) {
-    val stringKey = "string_key"
-    val intKey = "int_key"
-    val anyKey = "ANY"
-    var prefRandomInt by remember { mutableIntStateOf(-1) }
-    val scope = rememberCoroutineScope()
 
-    val context = LocalContext.current
-
-    val text = rememberDataStore(stringKey, "nil")
-    val su = rememberDataStore(intKey, 0)
-    val data = rememberDataStore(anyKey, DataModel())
-    Nlog.d("NahUtil - $su")
-
-    Column(
-        verticalArrangement = Arrangement.Center,
-    ) {
-
-        TextField(
-            value = text,
-            onValueChange = {
-                // It saved the String
-                Nstore.putDS(scope, stringKey, it)
-            },
-            label = { Text("이름") },
-            modifier = modifier
-        )
-        /**
-         * DataStore
-         * */
-        Button(onClick = {
-            // It saved the Types
-            Nstore.putDS(scope, intKey, Random().nextInt(100))
-        }) {
-            Text(
-                text = "Hello ${su} - ${text}!",
-                modifier = modifier
-            )
-        }
-        Button(onClick = {
-            // It saved the DataModel
-            Nstore.putDS(scope, anyKey, DataModel(id = "0", name = "이름-${text}", age = su + 1))
-        }) {
-            Text(
-                text = data.toString(),
-                modifier = modifier
-            )
-        }
-        Button(onClick = {
-            // remove
-            Nstore.removeDS(scope, stringKey)
-            Nstore.removeDS(scope, intKey)
-            Nstore.removeDS(scope, anyKey)
-        }) {
-            Text(
-                text = "del",
-                modifier = modifier
-            )
-        }
-
-        /**
-         * SharedPreferences
-         * the usage is the same as DataStore
-         * */
-        Button(onClick = {
-            Npref.putData(intKey, Random().nextInt(100))
-        }) {
-            Text(
-                text = "랜덤값 생성!",
-                modifier = modifier
-            )
-        }
-        Button(onClick = {
-            prefRandomInt = Npref.getData(intKey, -1)
-        }) {
-            Text(
-                text = "랜덤값 ${prefRandomInt}",
-                modifier = modifier
-            )
-        }
-
-        Button(onClick = {
-            Npref.removeData(intKey)
-        }) {
-            Text(
-                text = "del",
-                modifier = modifier
-            )
-        }
-
-
-
-        /**
-         * NetworkUtil
-         * */
-        Button(onClick = {
-            // network check
-            scope.launch {
-                NetworkUtil.getWhatKindOfNetwork(context)
-            }
-        }) {
-            Text(
-                text = "network check",
-                modifier = modifier
-            )
-        }
-
-
-    }
-}
-
-
-@Composable
-fun ColumnScope.ButtonTest(color:Color) {
-    val gradientBrush = Brush.verticalGradient(
-        colors = listOf(
-            Color.Transparent,
-            Color.White.copy(alpha = 0.07f),
-            Color.Transparent,
-        ),
-        startY = 0f,
-        endY = Float.POSITIVE_INFINITY,
-        tileMode = TileMode.Clamp
-    )
-    Box(){
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.small,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = color,
-            ),
-            onClick = {
-                // USER_AGE 값 저장
-            }) {
-            Text(
-                text = "시작",
-                color = Color.White,
-            )
-        }
-        Box(modifier = Modifier.fillMaxWidth().height(30.dp).background(gradientBrush).align(
-            Alignment.Center))
-    }
-
-    Spacer(modifier = Modifier.height(60.dp))
-}

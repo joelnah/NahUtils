@@ -1,4 +1,4 @@
-package nah.prayer.nahutils
+package nah.prayer.nahutils.domain
 
 data class DataModel(
     val id:String ?= null,
