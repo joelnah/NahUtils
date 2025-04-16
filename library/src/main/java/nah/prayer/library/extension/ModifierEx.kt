@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 fun Modifier.nonRippleClickable(onClick:()->Unit): Modifier = composed{
     singleClickable(
         interactionSource = remember { MutableInteractionSource() },
+        enabled = true,
         indication = null,
         onClick = onClick,
     )
