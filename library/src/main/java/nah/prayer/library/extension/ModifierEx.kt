@@ -24,10 +24,10 @@ import kotlinx.coroutines.launch
 /**
  * Remove ripple effect from clickable
  * */
-fun Modifier.nonRippleClickable(onClick:()->Unit): Modifier = composed{
+fun Modifier.nonRippleClickable(enabled:Boolean=true, onClick:()->Unit): Modifier = composed{
     singleClickable(
         interactionSource = remember { MutableInteractionSource() },
-        enabled = true,
+        enabled = enabled,
         indication = null,
         onClick = onClick,
     )
