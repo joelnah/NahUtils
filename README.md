@@ -1,4 +1,4 @@
-# NahUtils
+# na-utils
 [![](https://jitpack.io/v/joelnah/NahUtils.svg)](https://jitpack.io/#joelnah/NahUtils)
 
 
