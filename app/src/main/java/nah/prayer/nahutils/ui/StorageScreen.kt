@@ -49,8 +49,6 @@ fun StorageScreen() {
     val su = rememberDataStore(intKey, 0)
     val data = rememberDataStore(anyKey, DataModel())
 
-    Nstore.testDataStoreEncryption()
-
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),

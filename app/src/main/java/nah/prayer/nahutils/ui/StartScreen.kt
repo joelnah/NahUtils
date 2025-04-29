@@ -8,11 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import nah.prayer.nahutils.ui.test.Test1
 import nah.prayer.nahutils.utils.LocalNavController
 import nah.prayer.nahutils.utils.Screens
 
 @Composable
 fun StartScreen() {
+    Test1()
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.SpaceAround

@@ -40,34 +40,26 @@ class LogManager {
 
     private fun buildPathMsg(): String {
         val stackTrace = Thread.currentThread().stackTrace
-
         val logIndex = getTraceElements(stackTrace)
 
         if (logIndex == -1) return "Unknown location"
 
         val relevantFrames = mutableListOf<StackTraceElement>()
 
-        var startIndex = -1
-        //Activity.kt 파일이 있는 곳까지만 출력
+        // logIndex 다음부터 Activity.kt 파일이 나올 때까지의 .kt 파일들을 수집
         for (i in (logIndex + 1) until stackTrace.size) {
             val element = stackTrace[i]
-            if (element.fileName?.endsWith("Activity.kt") == true) {
-                startIndex = i
-                break
-            }
-        }
-
-        //역순으로 출력
-        if (startIndex != -1) {
-            for (i in (logIndex + 1)..startIndex) {
-                val element = stackTrace[i]
-                if (element.fileName?.endsWith(".kt") == true) {
-                    relevantFrames.add(element)
+            if (element.fileName?.endsWith(".kt") == true) {
+                relevantFrames.add(element)
+                // Activity.kt를 찾았다면 해당 프레임까지 포함하고 중단
+                if (element.fileName?.endsWith("Activity.kt") == true) {
+                    break
                 }
             }
         }
 
-        // -> 구분자 추가
+        // 스택 트레이스는 가장 최신 호출이 앞에 오므로, 호출 순서대로 표시하려면 뒤집을 필요 없음
+        // 각 프레임을 "파일명:라인번호" 형식으로 변환하고 " -> " 구분자로 연결
         return relevantFrames.joinToString(" -> ") { frame ->
             "${frame.fileName}:${frame.lineNumber}"
         }
