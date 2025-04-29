@@ -27,8 +27,9 @@ import java.io.IOException
 
 object Npref {
     lateinit var sharedPreferences: SharedPreferences
+    val gson = Gson()
 
-    fun <T>putData(key: String, value: T) {
+    inline fun <reified T>putData(key: String, value: T) {
         sharedPreferences.edit().apply {
             when(value) {
                 is String -> putString(key, value)
@@ -36,21 +37,24 @@ object Npref {
                 is Boolean -> putBoolean(key, value)
                 is Float -> putFloat(key, value)
                 is Long -> putLong(key, value)
-                else -> throw IllegalArgumentException("This type can't be saved into Preferences")
+                else -> putString(key, gson.toJson(value, T::class.java))
             }
         }.apply()
     }
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T>getData(key: String, defaultValue: T): T {
+    inline fun <reified T>getData(key: String, defaultValue: T): T {
         return when(defaultValue) {
-            is String -> sharedPreferences.getString(key, defaultValue)
-            is Int -> sharedPreferences.getInt(key, defaultValue)
-            is Boolean -> sharedPreferences.getBoolean(key, defaultValue)
-            is Float -> sharedPreferences.getFloat(key, defaultValue)
-            is Long -> sharedPreferences.getLong(key, defaultValue)
-            else -> throw IllegalArgumentException("This type can't be saved into Preferences")
-        } as T
+            is String ->( sharedPreferences.getString(key, defaultValue as String) ?: defaultValue) as T
+            is Int -> (sharedPreferences.getInt(key, defaultValue))  as T
+            is Boolean -> (sharedPreferences.getBoolean(key, defaultValue)) as T
+            is Float -> (sharedPreferences.getFloat(key, defaultValue)) as T
+            is Long -> (sharedPreferences.getLong(key, defaultValue)) as T
+            else -> {
+                val json = sharedPreferences.getString(key, "")
+                if (json.isNullOrEmpty()) defaultValue
+                else gson.fromJson(json, T::class.java) ?: defaultValue
+            }
+        }
     }
 
     fun removeData(key: String) {
